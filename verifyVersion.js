@@ -13,10 +13,14 @@ console.log('packageVersion: ' + packageVersion);
 var solcBase = semver.coerce(solcVersion);
 var packageBase = semver.coerce(packageVersion);
 
+// NOTE: use process.exitCode instead of process.exit(). Calling process.exit()
+// right after loading the Emscripten module crashes Node on Windows with
+// "Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)" while libuv tears
+// down the module's pending async handles.
 if (solcBase !== null && packageBase !== null && semver.eq(packageBase, solcBase)) {
   console.log('Version matching');
-  process.exit(0);
+  process.exitCode = 0;
 } else {
   console.log('Version mismatch');
-  process.exit(1);
+  process.exitCode = 1;
 }
