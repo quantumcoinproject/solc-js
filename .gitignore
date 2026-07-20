@@ -38,3 +38,7 @@ bin
 out
 *.bin
 *.abi
+
+# ...but keep checked-in expected test fixtures (see test/createdToken.js)
+!test/resources/*.expected.bin
+!test/resources/*.expected.abi
