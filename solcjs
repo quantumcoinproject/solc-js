@@ -13,7 +13,13 @@ var commander = require('commander');
 
 var program = new commander.Command();
 program.name('solcjs');
-program.version(solc.version(), '--version', 'Show version and exit.');
+var pkg = require('./package.json');
+// Report both the embedded compiler build and the npm package that bundles it;
+// the package patch number advances independently of the compiler's 0.7.6 line.
+var versionString = solc.version() +
+  ' (' + pkg.name + ' ' + pkg.version +
+  (pkg.solidityRelease ? ', Solidity ' + pkg.solidityRelease : '') + ')';
+program.version(versionString, '--version', 'Show version and exit.');
 program
   .option('--optimize', 'Enable bytecode optimizer.')
   .option('--bin', 'Binary of the contracts in hex.')
