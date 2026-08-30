@@ -2,14 +2,18 @@
 
 var semver = require('semver');
 
-var packageVersion = require('./package.json').version;
+var pkg = require('./package.json');
+var packageVersion = pkg.version;
 var solcVersion = require('./index.js').version();
 
 console.log('solcVersion: ' + solcVersion);
 console.log('packageVersion: ' + packageVersion);
+console.log('solidityRelease: ' + (pkg.solidityRelease || '(not set)'));
 
-// Compare only the base major.minor.patch, so the package can carry
-// pre-release/build suffixes (e.g. 0.7.6-qc.1) for wrapper-only changes.
+// Compare only major.minor. The embedded compiler stays on the 0.7.x line
+// (upstream Solidity 0.7.6 + QuantumCoin 32-byte addresses) while the package
+// patch number advances for compiler rebuilds and wrapper-only changes, so
+// e.g. package 0.7.7 legitimately ships a compiler that reports 0.7.6.
 var solcBase = semver.coerce(solcVersion);
 var packageBase = semver.coerce(packageVersion);
 
@@ -17,7 +21,8 @@ var packageBase = semver.coerce(packageVersion);
 // right after loading the Emscripten module crashes Node on Windows with
 // "Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)" while libuv tears
 // down the module's pending async handles.
-if (solcBase !== null && packageBase !== null && semver.eq(packageBase, solcBase)) {
+if (solcBase !== null && packageBase !== null &&
+    solcBase.major === packageBase.major && solcBase.minor === packageBase.minor) {
   console.log('Version matching');
   process.exitCode = 0;
 } else {

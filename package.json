@@ -1,7 +1,8 @@
 {
   "name": "@quantumcoin/solc",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "Solidity compiler for QuantumCoin with 32-byte address support",
+  "solidityRelease": "v32b.8.14",
   "main": "index.js",
   "bin": {
     "solcjs": "solcjs"

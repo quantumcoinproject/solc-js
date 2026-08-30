@@ -89,10 +89,12 @@ npx solcjs --bin --base-path . contract.sol
 The embedded compiler reports:
 
 ```
-0.7.6+commit.6da11747.mod.Emscripten.clang
+0.7.6+commit.4f25fa5d.mod.Emscripten.clang
 ```
 
-built from [quantumcoinproject/Solidity v32b.8.12](https://github.com/quantumcoinproject/Solidity/releases/tag/v32b.8.12), which is based on upstream Solidity 0.7.6 with 32-byte address support.
+built from [quantumcoinproject/Solidity v32b.8.14](https://github.com/quantumcoinproject/Solidity/releases/tag/v32b.8.14), which is based on upstream Solidity 0.7.6 with 32-byte address support.
+
+The npm package version (currently 0.7.7) tracks this bundle and its JavaScript wrapper, so its patch number advances with each compiler rebuild; only the major.minor is guaranteed to match the embedded compiler's reported version. The exact fork release is recorded in the `solidityRelease` field of `package.json`.
 
 ## License and attribution
 
